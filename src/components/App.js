@@ -1,7 +1,15 @@
-import AppRouter from "./Router";
+import { useState } from "react";
+import AppRouter from "components/Router";
+import { authService } from "fbase";
 
 function App() {
-  return <AppRouter></AppRouter>;
+  const [isLoggedin, setIsLoggedin] = useState(authService.currentUser);
+  return (
+    <>
+      <AppRouter isLoggedin={isLoggedin}></AppRouter>
+      <footer>&copy; {new Date().getFullYear()} firebase-twitter</footer>
+    </>
+  );
 }
 
 export default App;
