@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { authService } from "fbase";
 
 function App() {
-  const [isLoggedin, setIsLoggedin] = useState(authService.currentUser);
+  const [init, setInit] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      setIsLoggedin(user ? true : false);
+      setInit(true);
+    });
+  }, []);
+
   return (
     <>
-      <AppRouter isLoggedin={isLoggedin}></AppRouter>
+      {init ? <AppRouter isLoggedin={isLoggedin} /> : "Initializing..."}
       <footer>&copy; {new Date().getFullYear()} firebase-twitter</footer>
     </>
   );
