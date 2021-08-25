@@ -17,6 +17,9 @@ const Home = ({ userObj }) => {
         }));
         setTweets(tweetArr);
       });
+    return () => {
+      setTweets([]);
+    };
   }, []);
 
   const onSubmit = async (e) => {
