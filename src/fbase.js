@@ -16,3 +16,5 @@ firebase.initializeApp(firebaseConfig);
 export const firebaseInstance = firebase;
 export const authService = firebase.auth();
 export const dbService = firebase.firestore();
+export const COLLECTION_NAME = "tweetsCollection";
+export const TEXT_MAX_LENGTH = 120;

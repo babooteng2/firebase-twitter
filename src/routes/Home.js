@@ -1,8 +1,6 @@
 import Tweet from "components/Tweet";
-import { dbService } from "fbase";
+import { dbService, COLLECTION_NAME, TEXT_MAX_LENGTH } from "fbase";
 import React, { useEffect, useState } from "react";
-
-const COLLECTION_NAME = "tweetsCollection";
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -43,14 +41,14 @@ const Home = ({ userObj }) => {
           onChange={onChange}
           type="text"
           placeholder="What's on your mind?"
-          maxLength={120}
+          maxLength={TEXT_MAX_LENGTH}
         />
         <input type="submit" value="tweet" />
       </form>
       {tweets.map((tweet) => {
         return (
           <Tweet
-            tweet={tweet}
+            tweetObj={tweet}
             isOwner={tweet.creatorId === userObj.uid ? true : false}
             key={tweet.id}
           />
