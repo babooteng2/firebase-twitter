@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
 
-const AppRouter = ({ isLoggedin }) => {
+const AppRouter = ({ isLoggedin, userObj }) => {
   return (
     <Router>
       {isLoggedin && <Navigation />}
@@ -18,7 +13,7 @@ const AppRouter = ({ isLoggedin }) => {
         {isLoggedin ? (
           <>
             <Route exact path="/">
-              <Home />
+              <Home userObj={userObj} />
             </Route>
             <Route exact path="/profile">
               <Profile />
@@ -29,7 +24,6 @@ const AppRouter = ({ isLoggedin }) => {
             <Route exact path="/">
               <Auth></Auth>
             </Route>
-            {/* <Redirect from="*" to="/" /> */}
           </>
         )}
       </Switch>

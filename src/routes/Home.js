@@ -1,40 +1,39 @@
 import { dbService } from "fbase";
 import React, { useEffect, useState } from "react";
 
-const COLLECTION_NAME = "firebase-tweet";
+const COLLECTION_NAME = "tweetsCollection";
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
-  const getTweets = async () => {
-    const querySnapshot = await dbService.collection(COLLECTION_NAME).get();
-    querySnapshot.forEach((doc) => {
-      // set 으로 시작하는 함수를 사용할 때 리액트는 이전의 값을 참조할 수 있게 해준다. [curr, prev]
-      const tweetObj = {
-        id: doc.id,
-        ...doc.data(),
-      };
-      setTweets((prev) => [tweetObj, ...prev]);
-    });
-  };
+
   useEffect(() => {
-    getTweets();
+    dbService
+      .collection(COLLECTION_NAME)
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const tweetArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTweets(tweetArr);
+      });
   }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     await dbService.collection(COLLECTION_NAME).add({
-      tweet,
-      createAt: Date.now(),
+      creatorId: userObj.uid,
+      text: tweet,
+      createdAt: Date.now(),
     });
     setTweet("");
   };
+
   const onChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setTweet(value);
+    setTweet(e.target.value);
   };
-  console.log(tweets);
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -48,7 +47,7 @@ const Home = () => {
         <input type="submit" value="tweet" />
       </form>
       {tweets.map((tweet) => {
-        return <p key={tweet.id}>{tweet.tweet}</p>;
+        return <p key={tweet.id}>{tweet.text}</p>;
       })}
     </>
   );
