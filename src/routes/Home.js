@@ -1,3 +1,4 @@
+import Tweet from "components/Tweet";
 import { dbService } from "fbase";
 import React, { useEffect, useState } from "react";
 
@@ -47,7 +48,13 @@ const Home = ({ userObj }) => {
         <input type="submit" value="tweet" />
       </form>
       {tweets.map((tweet) => {
-        return <p key={tweet.id}>{tweet.text}</p>;
+        return (
+          <Tweet
+            tweet={tweet}
+            isOwner={tweet.creatorId === userObj.uid ? true : false}
+            key={tweet.id}
+          />
+        );
       })}
     </>
   );
