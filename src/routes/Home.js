@@ -36,6 +36,18 @@ const Home = ({ userObj }) => {
     setTweet(e.target.value);
   };
 
+  const onFileChange = (e) => {
+    const {
+      target: { files },
+    } = e;
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (e) => {
+      console.log(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -46,6 +58,7 @@ const Home = ({ userObj }) => {
           placeholder="What's on your mind?"
           maxLength={TEXT_MAX_LENGTH}
         />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="tweet" />
       </form>
       {tweets.map((tweet) => {
