@@ -1,6 +1,12 @@
 import Tweet from "components/Tweet";
-import { dbService, COLLECTION_NAME, TEXT_MAX_LENGTH } from "fbase";
+import {
+  dbService,
+  COLLECTION_NAME,
+  TEXT_MAX_LENGTH,
+  storageService,
+} from "fbase";
 import React, { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -26,12 +32,17 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await dbService.collection(COLLECTION_NAME).add({
+    //이미지는 userId 로 storage 에 폴더로 구분되어 저장된다.
+    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+    const response = await fileRef.putString(attachedImg, "data_url");
+    console.log(response);
+    // set Image upload first
+    /* await dbService.collection(COLLECTION_NAME).add({
       creatorId: userObj.uid,
       text: tweet,
       createdAt: Date.now(),
     });
-    setTweet("");
+    setTweet(""); */
   };
 
   const onChange = (e) => {
