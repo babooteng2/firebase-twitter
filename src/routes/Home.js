@@ -1,10 +1,12 @@
 import Tweet from "components/Tweet";
 import { dbService, COLLECTION_NAME, TEXT_MAX_LENGTH } from "fbase";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
+  const [attachedImg, setAttachedImg] = useState();
+  const imgInput = useRef();
 
   useEffect(() => {
     dbService
@@ -36,6 +38,11 @@ const Home = ({ userObj }) => {
     setTweet(e.target.value);
   };
 
+  const onClearImgClick = () => {
+    setAttachedImg(null);
+    imgInput.current.value = null;
+  };
+
   const onFileChange = (e) => {
     const {
       target: { files },
@@ -43,7 +50,10 @@ const Home = ({ userObj }) => {
     const file = files[0];
     const reader = new FileReader();
     reader.onloadend = (e) => {
-      console.log(e.target.result);
+      const {
+        target: { result },
+      } = e;
+      setAttachedImg(result);
     };
     reader.readAsDataURL(file);
   };
@@ -58,8 +68,24 @@ const Home = ({ userObj }) => {
           placeholder="What's on your mind?"
           maxLength={TEXT_MAX_LENGTH}
         />
-        <input type="file" accept="image/*" onChange={onFileChange} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          ref={imgInput}
+        />
         <input type="submit" value="tweet" />
+        {attachedImg && (
+          <div>
+            <img
+              src={attachedImg}
+              width="50px"
+              height="50px"
+              alt="userSelect"
+            />
+            <button onClick={onClearImgClick}>Clear</button>
+          </div>
+        )}
       </form>
       {tweets.map((tweet) => {
         return (
