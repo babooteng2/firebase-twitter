@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 const Profile = ({ userObj }) => {
   const [tweets, setTweets] = useState([]);
-
+  const [newDisplayName, setDisplayName] = useState(userObj.displayName);
   const history = useHistory();
   const onLogOut = () => {
     history.push("/");
@@ -30,10 +30,36 @@ const Profile = ({ userObj }) => {
     getMyTweets();
   }, [getMyTweets]);
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (userObj.displayName !== newDisplayName) {
+      const response = await userObj.updateProfile({
+        displayName: newDisplayName,
+      });
+      console.log(response);
+    }
+  };
+
+  const onChange = (e) => {
+    const {
+      target: { value },
+    } = e;
+    setDisplayName(value);
+  };
+
   return (
     <>
       <h2>Profile</h2>
       <button onClick={onLogOut}>Log Out</button>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          onChange={onChange}
+          placeholder="Display name"
+          value={newDisplayName}
+        />
+        <input type="submit" value="Update Profile" />
+      </form>
       {tweets.length !== 0 && (
         <ul>
           {tweets.docs.map((doc) => {
