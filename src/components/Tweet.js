@@ -57,6 +57,14 @@ const Tweet = ({ tweetObj, isOwner }) => {
       ) : (
         <>
           <span>{tweetObj.text}</span>
+          {tweetObj.attachedURL && (
+            <img
+              src={tweetObj.attachedURL}
+              alt="user"
+              width="50px"
+              height="50px"
+            />
+          )}
           {isOwner && (
             <>
               <button onClick={onToggleEdit}>Edit Tweet</button>

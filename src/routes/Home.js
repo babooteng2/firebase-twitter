@@ -35,21 +35,25 @@ const Home = ({ userObj }) => {
     //이미지는 userId 로 storage 에 폴더로 구분되어 저장된다.
     const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
     const response = await fileRef.putString(attachedImg, "data_url");
-    console.log(response);
-    // set Image upload first
-    /* await dbService.collection(COLLECTION_NAME).add({
+    const attachedURL = await response.ref.getDownloadURL();
+    const tweetObj = {
       creatorId: userObj.uid,
       text: tweet,
       createdAt: Date.now(),
-    });
-    setTweet(""); */
+      attachedURL,
+    };
+
+    // set Image upload first
+    await dbService.collection(COLLECTION_NAME).add(tweetObj);
+    setTweet("");
+    onClearImg();
   };
 
   const onChange = (e) => {
     setTweet(e.target.value);
   };
 
-  const onClearImgClick = () => {
+  const onClearImg = () => {
     setAttachedImg(null);
     imgInput.current.value = null;
   };
@@ -94,7 +98,7 @@ const Home = ({ userObj }) => {
               height="50px"
               alt="userSelect"
             />
-            <button onClick={onClearImgClick}>Clear</button>
+            <button onClick={onClearImg}>Clear</button>
           </div>
         )}
       </form>
