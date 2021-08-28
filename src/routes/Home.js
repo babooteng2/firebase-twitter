@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
-  const [attachedImg, setAttachedImg] = useState();
+  const [attachedImg, setAttachedImg] = useState("");
   const imgInput = useRef();
 
   useEffect(() => {
@@ -32,10 +32,14 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (tweet === "") return;
     //이미지는 userId 로 storage 에 폴더로 구분되어 저장된다.
-    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-    const response = await fileRef.putString(attachedImg, "data_url");
-    const attachedURL = await response.ref.getDownloadURL();
+    let attachedURL = "";
+    if (attachedImg !== "") {
+      const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+      const response = await fileRef.putString(attachedImg, "data_url");
+      attachedURL = await response.ref.getDownloadURL();
+    }
     const tweetObj = {
       creatorId: userObj.uid,
       text: tweet,
@@ -54,7 +58,7 @@ const Home = ({ userObj }) => {
   };
 
   const onClearImg = () => {
-    setAttachedImg(null);
+    setAttachedImg("");
     imgInput.current.value = null;
   };
 

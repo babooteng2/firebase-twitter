@@ -1,4 +1,9 @@
-import { COLLECTION_NAME, dbService, TEXT_MAX_LENGTH } from "fbase";
+import {
+  COLLECTION_NAME,
+  dbService,
+  storageService,
+  TEXT_MAX_LENGTH,
+} from "fbase";
 import React, { useState } from "react";
 
 const Tweet = ({ tweetObj, isOwner }) => {
@@ -31,6 +36,10 @@ const Tweet = ({ tweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure to delete it?");
     if (ok) {
       await dbService.doc(TEXT_DB_PATH).delete();
+      // img 삭제 - URL에서 ref를 얻어 삭제
+      if (tweetObj.attachedURL !== "") {
+        await storageService.refFromURL(tweetObj.attachedURL).delete();
+      }
     }
   };
 
