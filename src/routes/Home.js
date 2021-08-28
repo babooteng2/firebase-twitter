@@ -33,7 +33,6 @@ const Home = ({ userObj }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (tweet === "") return;
-    //이미지는 userId 로 storage 에 폴더로 구분되어 저장된다.
     let attachedURL = "";
     if (attachedImg !== "") {
       const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
