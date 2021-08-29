@@ -2,7 +2,7 @@ import { authService, COLLECTION_NAME, dbService } from "fbase";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-const Profile = ({ userObj }) => {
+const Profile = ({ refreshUser, userObj }) => {
   const [tweets, setTweets] = useState([]);
   const [newDisplayName, setDisplayName] = useState(userObj.displayName);
   const history = useHistory();
@@ -33,10 +33,10 @@ const Profile = ({ userObj }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (userObj.displayName !== newDisplayName) {
-      const response = await userObj.updateProfile({
+      await userObj.updateProfile({
         displayName: newDisplayName,
       });
-      console.log(response);
+      refreshUser();
     }
   };
 

@@ -8,6 +8,11 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
+        /* setUserObj({
+          uid: user.uid,
+          displayName: user.displayName,
+          updateProfile: (args) => user.updateProfile(args),
+        }); */
         setUserObj(user);
       } else {
         setUserObj(null);
@@ -16,10 +21,24 @@ function App() {
     });
   }, []);
 
+  const refreshUser = () => {
+    setUserObj({ ...authService.currentUser });
+    /* const user = authService.currentUser;
+    setUserObj({
+      uid: user.uid,
+      displayName: user.displayName,
+      updateProfile: (args) => user.updateProfile(args),
+    }); */
+  };
+
   return (
     <>
       {init ? (
-        <AppRouter isLoggedin={Boolean(userObj)} userObj={userObj} />
+        <AppRouter
+          refreshUser={refreshUser}
+          isLoggedin={Boolean(userObj)}
+          userObj={userObj}
+        />
       ) : (
         "Initializing..."
       )}
