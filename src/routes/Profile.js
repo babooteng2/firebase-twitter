@@ -4,7 +4,9 @@ import { useHistory } from "react-router-dom";
 
 const Profile = ({ refreshUser, userObj }) => {
   const [tweets, setTweets] = useState([]);
-  const [newDisplayName, setDisplayName] = useState(userObj.displayName);
+  const [newDisplayName, setDisplayName] = useState(
+    userObj.displayName ? userObj.displayName : ""
+  );
   const history = useHistory();
   const onLogOut = () => {
     history.push("/");
