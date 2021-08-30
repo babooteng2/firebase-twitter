@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { authService } from "fbase";
+//https://console.developers.google.com/apis/credentials
 
 function App() {
   const [init, setInit] = useState(false);
