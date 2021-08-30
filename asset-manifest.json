@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/github.io/firebase-twitter/static/css/main.9a17adec.chunk.css",
+    "main.js": "/github.io/firebase-twitter/static/js/main.978add20.chunk.js",
+    "main.js.map": "/github.io/firebase-twitter/static/js/main.978add20.chunk.js.map",
+    "runtime-main.js": "/github.io/firebase-twitter/static/js/runtime-main.144974c5.js",
+    "runtime-main.js.map": "/github.io/firebase-twitter/static/js/runtime-main.144974c5.js.map",
+    "static/js/2.90223a55.chunk.js": "/github.io/firebase-twitter/static/js/2.90223a55.chunk.js",
+    "static/js/2.90223a55.chunk.js.map": "/github.io/firebase-twitter/static/js/2.90223a55.chunk.js.map",
+    "index.html": "/github.io/firebase-twitter/index.html",
+    "static/css/main.9a17adec.chunk.css.map": "/github.io/firebase-twitter/static/css/main.9a17adec.chunk.css.map",
+    "static/js/2.90223a55.chunk.js.LICENSE.txt": "/github.io/firebase-twitter/static/js/2.90223a55.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.144974c5.js",
+    "static/js/2.90223a55.chunk.js",
+    "static/css/main.9a17adec.chunk.css",
+    "static/js/main.978add20.chunk.js"
+  ]
+}
