@@ -1,3 +1,5 @@
+import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   COLLECTION_NAME,
   dbService,
@@ -44,24 +46,30 @@ const Tweet = ({ tweetObj, isOwner }) => {
   };
 
   return (
-    <div>
-      {editting ? (
+    <div className="tweet">
+      {editting && isOwner ? (
         <>
-          {isOwner && (
-            <form onSubmit={onSubmit}>
-              <input
-                type="text"
-                value={newTweet}
-                onChange={onChange}
-                maxLength={TEXT_MAX_LENGTH}
-                required
-              />
-              <button type="button" onClick={onToggleEdit}>
-                Cancel
-              </button>
-              <button type="submit">Edit Done</button>
-            </form>
-          )}
+          <form onSubmit={onSubmit} className="container tweetEdit">
+            <input
+              type="text"
+              value={newTweet}
+              onChange={onChange}
+              maxLength={TEXT_MAX_LENGTH}
+              required
+              autoFocus
+              className="formInput"
+            />
+            <span type="submit" className="formBtn">
+              Edit Done
+            </span>
+          </form>
+          <span
+            type="button"
+            onClick={onToggleEdit}
+            className="formBtn cancelBtn"
+          >
+            Cancel
+          </span>
         </>
       ) : (
         <>
@@ -75,10 +83,14 @@ const Tweet = ({ tweetObj, isOwner }) => {
             />
           )}
           {isOwner && (
-            <>
-              <button onClick={onToggleEdit}>Edit Tweet</button>
-              <button onClick={onDeleteClick}>Delete Tweet</button>
-            </>
+            <div className="tweet__actions">
+              <span onClick={onToggleEdit}>
+                <FontAwesomeIcon icon={faPencilAlt} className="colorBlue" />
+              </span>
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} className="colorBlue" />
+              </span>
+            </div>
           )}
         </>
       )}

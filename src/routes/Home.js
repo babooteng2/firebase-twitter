@@ -23,7 +23,7 @@ const Home = ({ userObj }) => {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <TweetFactory userObj={userObj} />
       {tweets.map((tweet) => {
         return (
@@ -34,7 +34,7 @@ const Home = ({ userObj }) => {
           />
         );
       })}
-    </>
+    </div>
   );
 };
 

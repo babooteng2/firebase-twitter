@@ -50,24 +50,26 @@ const Profile = ({ refreshUser, userObj }) => {
   };
 
   return (
-    <>
-      <h2>Profile</h2>
-      <button onClick={onLogOut}>Log Out</button>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           type="text"
           onChange={onChange}
           placeholder="Display name"
           value={newDisplayName}
+          className="formInput"
         />
-        <input type="submit" value="Update Profile" />
+        <input type="submit" value="Update Profile" className="formBtn" />
       </form>
+      <span onClick={onLogOut} className="formBtn cancelBtn logOut">
+        Log Out
+      </span>
       {tweets.length !== 0 && (
-        <ul>
+        <ul className="profile_tweetContainer">
           {tweets.docs.map((doc) => {
             const { attachedURL, text } = doc.data();
             return (
-              <li key={doc.id}>
+              <li key={doc.id} className="tweet">
                 {attachedURL && (
                   <img
                     src={attachedURL}
@@ -82,7 +84,7 @@ const Profile = ({ refreshUser, userObj }) => {
           })}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 export default Profile;

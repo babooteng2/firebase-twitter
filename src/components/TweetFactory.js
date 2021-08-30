@@ -6,6 +6,8 @@ import {
   TEXT_MAX_LENGTH,
 } from "fbase";
 import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const TweetFactory = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -58,25 +60,43 @@ const TweetFactory = ({ userObj }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="factoryForm">
+      <div className="factoryInput__container">
+        <input
+          value={tweet}
+          onChange={onChange}
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={TEXT_MAX_LENGTH}
+          className="factoryInput__input"
+        />
+        <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+      </div>
+      <label htmlFor="attach-file" className="factoryInput__label">
+        <span>Add photo</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
       <input
-        value={tweet}
-        onChange={onChange}
-        type="text"
-        placeholder="What's on your mind?"
-        maxLength={TEXT_MAX_LENGTH}
-      />
-      <input
+        id="attach-file"
+        className="attachFile"
         type="file"
         accept="image/*"
         onChange={onFileChange}
         ref={imgInput}
       />
-      <input type="submit" value="tweet" />
       {attachedImg && (
-        <div>
-          <img src={attachedImg} width="50px" height="50px" alt="userSelect" />
-          <button onClick={onClearImg}>Clear</button>
+        <div className="factoryForm__attachment">
+          <img
+            src={attachedImg}
+            width="50px"
+            height="50px"
+            alt="userSelect"
+            style={{ backgroundImage: attachedImg }}
+          />
+          <div onClick={onClearImg} className="factoryForm__clear">
+            <span>Remove</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
         </div>
       )}
     </form>
